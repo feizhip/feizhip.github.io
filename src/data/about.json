@@ -1,0 +1,46 @@
+{
+  "eyebrow": "ABOUT",
+  "title_zh": "关于我",
+  "title_en": "About Me",
+  "_note": "bio / personality / interests 是占位文案，等本人提供后替换；skills 与 education 来自简历原文",
+  "photo": "/images/sci/sci-conference-mentor.jpg",
+  "photo_caption": "待补充：与导师在学术会议合影",
+  "bio": ["待补充：自我介绍文案（等本人提供）"],
+  "personality": ["待补充"],
+  "interests": ["待补充"],
+  "skills": [
+    "Python",
+    "Linux",
+    "PyTorch",
+    "YOLO",
+    "Transformers",
+    "PEFT / LoRA",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Node.js",
+    "PostgreSQL",
+    "Docker",
+    "Nginx / Caddy",
+    "AI Agents",
+    "Ollama"
+  ],
+  "education": {
+    "school": "广东石油化工学院",
+    "major": "物联网工程",
+    "degree": "本科",
+    "period": "2023.09 - 至今",
+    "courses": [
+      "C 语言",
+      "Python",
+      "Java",
+      "Linux",
+      "云计算",
+      "计算机组成原理",
+      "操作系统",
+      "数据结构",
+      "计算机网络",
+      "51 单片机"
+    ]
+  }
+}

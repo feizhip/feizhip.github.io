@@ -1,0 +1,37 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 构建产物
+dist/
+dist-ssr/
+.vite/
+
+# 备份（本地数据快照，不进版本库）
+_backup/
+
+# 字体（npm install 后由 scripts/setup-fonts.mjs 自动生成）
+public/fonts/
+
+# 日志与本地环境
+*.log
+npm-debug.log*
+.env
+.env.local
+.DS_Store
+Thumbs.db
+
+# 助手内部数据（不进版本库）
+.workbuddy/
+
+# 工作参考 / 抽帧 / 验证截图
+_ref/
+
+# 用户原始素材（非网站产物，勿入库）
+_参考素材/
+SCI相关照片/
+人物设定/
+
+# 根目录散落的原始截图（已复制进 public/images）
+4ceb4f51626f9f05d1ea2fead68563bc.jpg
+de4b08a4bbe1eb3eba4e7e40e7839e0c.jpg

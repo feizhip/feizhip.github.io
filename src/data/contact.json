@@ -1,0 +1,16 @@
+{
+  "eyebrow": "CONTACT",
+  "title_zh": "期待与你的对话与合作。",
+  "title_en": "Let's build something together.",
+  "email": "hassanishaq208@gmail.com",
+  "location": null,
+  "phone": null,
+  "wechat": "ma13286474524",
+  "socials": [
+    { "type": "github", "label": "GitHub", "url": null },
+    { "type": "juejin", "label": "掘金", "url": null },
+    { "type": "zhihu", "label": "知乎", "url": null },
+    { "type": "bilibili", "label": "B站", "url": null }
+  ],
+  "cta_label": "Contact"
+}

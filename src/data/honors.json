@@ -1,0 +1,13 @@
+{
+  "eyebrow": "HONORS",
+  "title_zh": "荣誉奖项",
+  "title_en": "Honors & Awards",
+  "_note": "奖项名称来自简历原文；颁发单位 / 级别 / 年份等细节待本人提供后补充，页面会显示「待补充」",
+  "items": [
+    { "id": "h1", "title": "一等奖学金", "issuer": null, "level": null, "year": null },
+    { "id": "h2", "title": "校级三好学生", "issuer": null, "level": null, "year": null },
+    { "id": "h3", "title": "国家励志奖学金", "issuer": null, "level": null, "year": null },
+    { "id": "h4", "title": "吴飞鹏奖学金", "issuer": null, "level": null, "year": null },
+    { "id": "h5", "title": "肇英集团奖学金", "issuer": null, "level": null, "year": null }
+  ]
+}

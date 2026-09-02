@@ -1,0 +1,129 @@
+{
+  "eyebrow": "WORK",
+  "title_zh": "作品 / 项目",
+  "title_en": "Selected Work",
+  "_note": "每条 = 单螺旋照片墙里的一张卡。开放式清单：网站、论文、活动都可塞进。cover.src 全部留空，等本人提供媒体素材后再填。",
+  "items": [
+    {
+      "id": "aigcdown",
+      "title": "降论文 AIGC 网站",
+      "subtitle": "aigcdown.com",
+      "period": "2026.05 - 至今",
+      "cover": { "type": "image", "src": "/images/aigcdown-cover.png", "caption": "智写降痕 · AIGC检测与降重平台" },
+      "link": "https://aigcdown.com/",
+      "role": "独立开发 · 网站",
+      "summary": "一个人跑通从市场调研、模型微调到多服务器部署全流程的降 AIGC 率工具站。",
+      "highlights": [
+        "负责市场调研、竞品分析、方案设计、数据清洗处理、大模型微调与部署",
+        "多（云）服务器协作，独立完成网站搭建全流程"
+      ],
+      "stack": [
+        "SFT 大模型微调",
+        "模型量化",
+        "大模型 API 调用",
+        "Python",
+        "React",
+        "TypeScript",
+        "SQLite",
+        "Nginx",
+        "Linux"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "jinengcang",
+      "title": "「技能仓」在线课程平台",
+      "subtitle": "jinengcang.cn",
+      "period": "2026.08 - 至今",
+      "cover": { "type": "image", "src": "/images/jinengcang-cover.png", "caption": "技能仓 · 在线课程学习平台" },
+      "link": "https://jinengcang.cn/",
+      "role": "独立开发 · 网站",
+      "summary": "独立全栈开发的在线课程平台，覆盖课程学习、题库、进度管理与设备授权，已上线运营。",
+      "highlights": [
+        "独立完成需求调研、课程设计、全栈开发、数据建模、自动化测试及服务器部署",
+        "搭建课程学习、题库、进度管理、访问码和设备授权系统"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Node.js",
+        "PostgreSQL",
+        "Drizzle ORM",
+        "Docker",
+        "Caddy",
+        "Vitest",
+        "Playwright",
+        "Linux"
+      ],
+      "metrics": [{ "label": "使用人数", "value": "50+" }]
+    },
+    {
+      "id": "yolo11-lychee",
+      "title": "基于改进 YOLOv11 的荔枝虫眼检测",
+      "subtitle": "YOLO-Lychee-Advanced · SCI 二区",
+      "period": "2025.03 - 2025.05",
+      "cover": { "type": "image", "src": "/images/sci/sci-poster-lychee.jpg", "caption": "学术会议海报展示" },
+      "link": null,
+      "role": "科研 · 第一作者",
+      "summary": "在 YOLOv11 基础上引入 C2f + CBAM + CIoU 等改进，检测精度与效率全面超越同期 YOLO 变体。",
+      "highlights": [
+        "改进 YOLOv11（C2f + CBAM + CIoU），优化 NMS 后 Precision 达 95.5%",
+        "mAP50-95 达 61.6%（6.4M 参数，37 FPS），超越 YOLOv9t / v10n",
+        "配套 PyQt5 可视化系统已在 GitHub 开源"
+      ],
+      "stack": [
+        "YOLOv11",
+        "C2f",
+        "CBAM",
+        "CIoU",
+        "Python",
+        "PyTorch",
+        "PyQt5"
+      ],
+      "metrics": [
+        { "label": "Precision", "value": "95.5%" },
+        { "label": "mAP50-95", "value": "61.6%" },
+        { "label": "推理速度", "value": "37 FPS" }
+      ],
+      "venue": "Frontiers in Plant Science",
+      "level": "SCI 二区",
+      "published_at": "2025-10-22",
+      "doi": "10.3389/fpls.2025.1643700",
+      "url": "https://doi.org/10.3389/fpls.2025.1643700"
+    },
+    {
+      "id": "yolo12-anthracnose",
+      "title": "基于改进 YOLOv12 的荔枝炭疽病轻量化分级",
+      "subtitle": "LycheeGuard-Lite · SCI 二区",
+      "period": "2025.06 - 2025.08",
+      "cover": { "type": "image", "src": "/images/sci/sci-field-lychee.jpg", "caption": "荔枝田间数据采集" },
+      "link": null,
+      "role": "科研 · 第一作者",
+      "summary": "原创轻量化骨干模块 C3k2_Light，参数与计算量双降，轻度病斑召回率 97.2%。",
+      "highlights": [
+        "原创轻量化骨干模块 C3k2_Light（深度可分离卷积重构），参数量降至 2.19M（-12.8%）",
+        "计算量 4.1 GFLOPs（-9.3%），mAP50 达 99.4%，轻度病斑召回率 97.2%",
+        "联合动态加权卷积 wConv2D 与双路注意力 C2PSA，超越同参数量级 YOLO 变体"
+      ],
+      "stack": [
+        "YOLOv12",
+        "C3k2_Light",
+        "wConv2D",
+        "C2PSA",
+        "Python",
+        "PyTorch"
+      ],
+      "metrics": [
+        { "label": "参数量", "value": "2.19M" },
+        { "label": "mAP50", "value": "99.4%" },
+        { "label": "轻病召回", "value": "97.2%" }
+      ],
+      "venue": "Frontiers in Plant Science",
+      "level": "SCI 二区",
+      "published_at": "2025-12-22",
+      "doi": "10.3389/fpls.2025.1688675",
+      "url": "https://doi.org/10.3389/fpls.2025.1688675"
+    }
+  ]
+}

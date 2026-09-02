@@ -1,0 +1,13 @@
+{
+  "logo_text": "MZ",
+  "logo_image": "/images/avatar-cartoon.jpg",
+  "items": [
+    { "id": "home", "label_zh": "首页", "label_en": "Home", "href": "#home" },
+    { "id": "work", "label_zh": "作品", "label_en": "Work", "href": "#work" },
+    { "id": "honors", "label_zh": "奖项", "label_en": "Honors", "href": "#honors" },
+    { "id": "about", "label_zh": "关于我", "label_en": "About", "href": "#about" },
+    { "id": "contact", "label_zh": "联系", "label_en": "Contact", "href": "#contact" }
+  ],
+  "status_badge": "Available for · 2026 校招",
+  "status_badge_target": "#contact"
+}
