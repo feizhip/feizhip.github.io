@@ -33,7 +33,7 @@ export default function Hero() {
         <div className="hero-glow absolute left-1/2 top-[-120px] h-[560px] w-[860px] max-w-[140vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--accent-soft),transparent)] blur-2xl" />
       </div>
 
-      <div className="container-page relative grid items-center gap-10 pb-24 pt-28 md:grid-cols-[1.1fr_0.9fr] md:pt-24">
+      <div className="container-page relative grid grid-cols-1 items-center gap-10 pb-24 pt-28 md:grid-cols-[1.1fr_0.9fr] md:pt-24">
         {/* ---------- 左：文字 ---------- */}
         <div>
           <p className="eyebrow">{profile.eyebrow}</p>
@@ -72,7 +72,7 @@ export default function Hero() {
         </div>
 
         {/* ---------- 右：紧凑单螺旋照片墙 ---------- */}
-        <div aria-hidden={false} className="relative select-none">
+        <div className="relative min-w-0 select-none">
           {/* 螺旋背后的暖光 */}
           <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <div className="h-[340px] w-[340px] rounded-full bg-[radial-gradient(closest-side,var(--accent-2-soft),transparent)] blur-xl" />
