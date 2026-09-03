@@ -78,9 +78,9 @@ export default function PhotoDetailModal({ project, allProjects, onClose, onNavi
       </button>
 
       {/* 主内容区 */}
-      <div className="relative flex h-[85vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-hairline bg-bg-0 shadow-[0_40px_90px_-30px_rgba(90,50,10,0.45)] sm:m-4">
-        {/* ====== 左侧：大图 ====== */}
-        <div className="relative flex shrink-0 items-center justify-center bg-[#efe4cf] sm:w-[55%]">
+      <div className="relative flex max-h-[95vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-hairline bg-bg-0 shadow-[0_40px_90px_-30px_rgba(90,50,10,0.45)] sm:h-[85vh] sm:max-h-[90vh] sm:flex-row sm:m-4">
+        {/* ====== 左侧：大图（移动端在上方固定高度；桌面左 55%） ====== */}
+        <div className="relative flex h-[38vh] shrink-0 items-center justify-center bg-[#efe4cf] sm:h-full sm:w-[55%]">
           {project.cover.src ? (
             project.cover.type === 'video' ? (
               <video
