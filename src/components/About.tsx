@@ -25,11 +25,10 @@ export default function About() {
           <p className="mt-2 text-sm tracking-wider2 text-fg-2">{about.title_en}</p>
         </div>
 
-        {/* 主体：个人照 + 信息 */}
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_380px]">
-          {/* 左/上：文字信息 */}
-          <div className="space-y-8">
-            {/* 个人照片（如果有）——作为视觉锚点，不是小缩略图 */}
+        {/* 主体：左大照片 + 右文字信息流 */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
+          {/* 左：个人照（视觉锚点，占大列） */}
+          <div className="min-w-0">
             {about.photo && (
               <div className="group relative overflow-hidden rounded-2xl border border-hairline bg-bg-1">
                 <img
@@ -45,7 +44,10 @@ export default function About() {
                 )}
               </div>
             )}
+          </div>
 
+          {/* 右：自我介绍 + 性格 + 技能 + 教育（紧凑流式） */}
+          <div className="min-w-0 space-y-8">
             {/* 自我介绍 */}
             {about.bio.length > 0 && !(about.bio.length === 1 && about.bio[0].startsWith('待补充')) && (
               <div>
@@ -58,47 +60,37 @@ export default function About() {
               </div>
             )}
 
-            {/* 标签组 */}
-            <div className="space-y-5">
-              {/* 性格标签（兴趣板块已删） */}
+            {/* 性格 + 技能 */}
+            <div className="space-y-4">
               <ChipGroup label="性格" items={about.personality} />
-
-              {/* 技能（宽） */}
-              <ChipGroup label={`技能 · ${about.skills.length}`} items={about.skills} wide />
+              <ChipGroup label={`技能 · ${about.skills.length}`} items={about.skills} />
             </div>
-          </div>
 
-          {/* 右/下：教育卡 */}
-          <aside className="rounded-2xl border border-hairline bg-bg-1 p-6 lg:p-8">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-              </div>
-              <div>
+            {/* 教育（紧凑版） */}
+            <div className="rounded-2xl border border-hairline bg-bg-1 p-5 lg:p-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
                 <p className="eyebrow mb-0">教育</p>
               </div>
-            </div>
 
-            <div className="mt-6 space-y-4">
-              <div>
-                <p className="font-display text-xl font-bold leading-tight text-fg-0">
-                  {about.education.school}
-                </p>
-                <p className="mt-1 text-sm text-fg-1">
-                  {about.education.major} · {about.education.degree}
-                </p>
-                <p className="mt-0.5 text-xs text-fg-2">{about.education.period}</p>
-              </div>
+              <div className="mt-4 space-y-3">
+                <div>
+                  <p className="font-display text-lg font-bold leading-tight text-fg-0">
+                    {about.education.school}
+                  </p>
+                  <p className="mt-0.5 text-sm text-fg-1">
+                    {about.education.major} · {about.education.degree}
+                  </p>
+                  <p className="mt-0.5 text-xs text-fg-2">{about.education.period}</p>
+                </div>
 
-              <div className="h-px bg-hairline" />
-
-              <div>
-                <p className="eyebrow">主修课程</p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5">
                   {about.education.courses.map((c) => (
                     <span
                       key={c}
-                      className="rounded-full border border-hairline px-2.5 py-1 text-[11px] text-fg-1 transition-colors hover:border-[color:var(--border-strong)]"
+                      className="rounded-full border border-hairline px-2.5 py-0.5 text-[10px] text-fg-1 transition-colors hover:border-[color:var(--border-strong)]"
                     >
                       {c}
                     </span>
@@ -106,14 +98,7 @@ export default function About() {
                 </div>
               </div>
             </div>
-
-            {/* 占位提示 */}
-            {(about.bio.length === 0 || (about.bio.length === 1 && about.bio[0].startsWith('待补充'))) && (
-              <p className="mt-6 inline-block rounded-full border border-dashed border-hairline px-3 py-1 text-[10px] text-fg-2">
-                自我介绍 / 性格 / 兴趣 等文案待本人提供
-              </p>
-            )}
-          </aside>
+          </div>
         </div>
       </div>
     </section>
