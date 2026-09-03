@@ -21,15 +21,15 @@ export default function Honors() {
         </h2>
         <p className="mt-1 text-sm tracking-wider2 text-fg-2">{honors.title_en}</p>
 
-        <ul className="mt-14 flex flex-wrap items-center justify-center gap-6 md:gap-8">
+        <ul className="mt-12 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 sm:mt-14">
           {honors.items.map((h, i) => (
             <li
               key={h.id}
               style={{ transform: `rotate(${ROTATIONS[i % ROTATIONS.length]})` }}
-              className="group relative inline-flex cursor-pointer flex-col items-center justify-center rounded-full border border-hairline bg-bg-1 px-9 py-5 transition-all duration-300 hover:scale-[1.08] hover:border-accent hover:bg-accent hover:text-[color:var(--bg-0)] hover:shadow-[0_22px_50px_-18px_rgba(242,100,25,0.65)] hover:rotate-0 motion-reduce:transition-none md:px-11 md:py-6"
+              className="group relative inline-flex cursor-pointer flex-col items-center justify-center rounded-full border border-hairline bg-bg-1 px-5 py-3.5 text-center transition-all duration-300 hover:scale-[1.08] hover:border-accent hover:bg-accent hover:text-[color:var(--bg-0)] hover:shadow-[0_22px_50px_-18px_rgba(242,100,25,0.65)] hover:rotate-0 motion-reduce:transition-none sm:px-9 sm:py-5 md:px-11 md:py-6"
             >
               {/* 奖项主标题：大字号思源宋体粗体 */}
-              <span className="font-display text-xl font-bold leading-tight md:text-2xl">
+              <span className="font-display text-lg font-bold leading-tight sm:text-xl md:text-2xl">
                 {h.title}
               </span>
               {/* 元信息：年份 · 级别 · 颁发单位（占位） */}
@@ -39,10 +39,6 @@ export default function Honors() {
             </li>
           ))}
         </ul>
-
-        <p className="mt-12 text-center text-[11px] text-fg-2">
-          年份 / 颁发单位 / 级别等细节待本人提供后补充
-        </p>
       </div>
     </section>
   )
