@@ -47,19 +47,40 @@ const C_CARD_H = 270
 
 export default function SpiralGallery({ items, onOpen, openId, compact = false }: Props) {
   const [rotation, setRotation] = useState(0)
+  const [mobileIdx, setMobileIdx] = useState(0)
   const stageRef = useRef<HTMLDivElement | null>(null)
   const mobileListRef = useRef<HTMLDivElement | null>(null)
   const dragRef = useRef({ dragging: false, startX: 0, startR: 0 })
   /* 紧凑模式下，滚轮只在鼠标悬停于舞台上时才旋转（否则放行页面滚动） */
   const hoveredRef = useRef(false)
 
-  /* 移动端箭头：按卡片宽度步进滚动 */
-  function mobileScrollBy(dir: 1 | -1) {
+  const N = items.length
+
+  /* 移动端：JS 精确滚动到第 i 张卡（不依赖触摸手势，箭头/圆点/页码都走这） */
+  function mobileGoTo(i: number) {
+    const el = mobileListRef.current
+    if (!el || i < 0 || i >= N) return
+    const target = el.children[i] as HTMLElement | undefined
+    if (!target) return
+    const left = target.offsetLeft - (el.clientWidth - target.clientWidth) / 2
+    el.scrollTo({ left, behavior: 'smooth' })
+    setMobileIdx(i)
+  }
+  function mobileStep(dir: 1 | -1) {
+    mobileGoTo((mobileIdx + dir + N) % N)
+  }
+  /* 触摸滑动时同步页码（节流：滚动停 120ms 后对齐） */
+  function onMobileScroll() {
     const el = mobileListRef.current
     if (!el) return
-    const card = el.querySelector('div')
-    const step = card?.getBoundingClientRect().width || el.clientWidth
-    el.scrollBy({ left: dir * step, behavior: 'smooth' })
+    window.clearTimeout((el as HTMLDivElement & { _st?: number })._st)
+    ;(el as HTMLDivElement & { _st?: number })._st = window.setTimeout(() => {
+      const card = el.children[0] as HTMLElement | undefined
+      if (!card) return
+      const step = card.clientWidth + 12 /* gap-3 */
+      const i = Math.round(el.scrollLeft / step)
+      setMobileIdx(Math.max(0, Math.min(N - 1, i)))
+    }, 120)
   }
 
   const RADIUS_ = compact ? C_RADIUS : RADIUS
@@ -128,7 +149,6 @@ export default function SpiralGallery({ items, onOpen, openId, compact = false }
     return () => el.removeEventListener('wheel', onWheel)
   }, [compact])
 
-  const N = items.length
   const step = TAU / N
   const currentIdx = (() => {
     const a = Math.round(-rotation / step)
@@ -226,6 +246,7 @@ export default function SpiralGallery({ items, onOpen, openId, compact = false }
       <div className="relative mt-4 sm:hidden">
         <div
           ref={mobileListRef}
+          onScroll={onMobileScroll}
           className="flex snap-x snap-proximity gap-3 overflow-x-auto pb-2"
           style={{
             touchAction: 'pan-x pan-y',
@@ -248,38 +269,58 @@ export default function SpiralGallery({ items, onOpen, openId, compact = false }
           ))}
         </div>
 
-        {/* 左右箭头：触摸滑不动时的兜底切换 */}
-        <button
-          type="button"
-          aria-label="上一个项目"
-          onClick={() => mobileScrollBy(-1)}
-          className="absolute left-0 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-hairline bg-bg-0/85 text-fg-1 shadow-md backdrop-blur transition active:scale-90"
-        >
-          <ChevronLeft size={18} />
-        </button>
-        <button
-          type="button"
-          aria-label="下一个项目"
-          onClick={() => mobileScrollBy(1)}
-          className="absolute right-0 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-hairline bg-bg-0/85 text-fg-1 shadow-md backdrop-blur transition active:scale-90"
-        >
-          <ChevronRight size={18} />
-        </button>
+        {/* 控制条：‹ 上一个 ｜ 页码 ｜ 下一个 › —— 纯 JS 滚动，100% 可用 */}
+        <div className="mt-2 flex items-center justify-between gap-2">
+          <button
+            type="button"
+            aria-label="上一个项目"
+            onClick={() => mobileStep(-1)}
+            className="focus-ring flex h-10 shrink-0 items-center gap-1 rounded-full border border-hairline bg-bg-0 px-3.5 text-xs font-medium text-fg-1 shadow-sm transition active:scale-95 sm:px-4"
+          >
+            <ChevronLeft size={15} /> 上一个
+          </button>
 
-        <p className="mt-2 text-center text-[11px] text-fg-2">左右滑动或点箭头浏览 · 点卡片看详情</p>
+          <div className="flex min-w-0 flex-col items-center px-1">
+            <span className="text-[11px] tracking-wider text-fg-2 tabular-nums">
+              {mobileIdx + 1} / {N}
+            </span>
+            <span className="mt-0.5 w-full truncate text-center text-[11px] font-medium text-fg-1">
+              {items[mobileIdx]?.title}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            aria-label="下一个项目"
+            onClick={() => mobileStep(1)}
+            className="focus-ring flex h-10 shrink-0 items-center gap-1 rounded-full border border-hairline bg-bg-0 px-3.5 text-xs font-medium text-fg-1 shadow-sm transition active:scale-95 sm:px-4"
+          >
+            下一个 <ChevronRight size={15} />
+          </button>
+        </div>
+
+        <p className="mt-2 text-center text-[11px] text-fg-2">左右滑动或点按钮浏览 · 点卡片看详情</p>
       </div>
 
-      {/* 指示点 */}
+      {/* 指示点（桌面切 rotation；移动端切横滑卡） */}
       <div className="mt-5 flex justify-center gap-2">
         {items.map((it, i) => (
           <button
             key={it.id}
             type="button"
-            onClick={() => setRotation(-i * step)}
+            onClick={() => {
+              if (window.matchMedia('(min-width: 640px)').matches) {
+                setRotation(-i * step)
+              } else {
+                mobileGoTo(i)
+              }
+            }}
             aria-label={`切到第 ${i + 1} 个：${it.title}`}
             className={cn(
               'h-1.5 rounded-full transition-all duration-300',
-              i === currentIdx ? 'w-7 bg-accent' : 'w-1.5 bg-fg-2/35 hover:bg-fg-2/60',
+              (window.matchMedia('(min-width: 640px)').matches ? i === currentIdx : i === mobileIdx)
+                ? 'w-7 bg-accent'
+                : 'w-1.5 bg-fg-2/35 hover:bg-fg-2/60',
             )}
           />
         ))}
