@@ -32,6 +32,8 @@ function HeroBanner() {
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-bg-0/55 to-transparent" />
         {/* 中央暖白径向蒙版：让标题/简介区在视频强光下仍清晰可读 */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_55%_at_center,rgba(251,247,240,0.7)_0%,rgba(251,247,240,0.35)_45%,transparent_72%)]" />
+        {/* 移动端加强蒙版：人物面部在窄屏比例偏大，额外加深中央覆盖让标题更稳 */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_70%_at_50%_45%,rgba(251,247,240,0.55)_0%,rgba(251,247,240,0.18)_50%,transparent_78%)] md:hidden" />
 
         <div className="relative z-10 px-6 pb-12 pt-16 text-center md:pb-20 md:pt-24">
           <p className="inline-block rounded-full bg-bg-0/75 px-3.5 py-1 text-[11px] uppercase tracking-[0.22em] text-fg-2 shadow-[0_2px_8px_rgba(0,0,0,0.15)] backdrop-blur">
@@ -318,16 +320,16 @@ function Stories() {
                         : 'pointer-events-none translate-y-2.5 opacity-0',
                     )}
                   >
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-white/85">
+                    <p className="text-[10px] uppercase leading-relaxed tracking-[0.16em] text-white/85 sm:tracking-[0.22em]">
                       {story.eyebrow} · {String(i + 1).padStart(2, '0')}
                     </p>
-                    <h3 className="mt-1 font-display text-2xl font-bold leading-snug text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] md:text-[27px]">
+                    <h3 className="mt-1 font-display text-xl font-bold leading-snug text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] sm:text-2xl md:text-[27px]">
                       {story.title_zh}
                     </h3>
-                    <p className="mt-0.5 text-xs uppercase tracking-widest text-white/70 drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)]">
+                    <p className="mt-0.5 text-[11px] uppercase tracking-wider text-white/70 drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)] sm:text-xs sm:tracking-widest">
                       {story.title_en}
                     </p>
-                    <p className="mt-2 max-w-md text-sm leading-relaxed text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.55)]">
+                    <p className="mt-2 max-w-md text-[13px] leading-relaxed text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.55)] sm:text-sm">
                       {story.desc}
                     </p>
                   </div>
