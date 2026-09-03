@@ -27,7 +27,7 @@ export default function Work() {
     <section id="work" className="relative border-t border-hairline py-24">
       {/* 背景微光 */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,var(--accent-soft),transparent_70%)] opacity-30 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,var(--accent-2-soft),transparent_70%)] opacity-70 blur-3xl" />
       </div>
 
       <div className="container-page relative">

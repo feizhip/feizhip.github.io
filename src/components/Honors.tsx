@@ -31,10 +31,6 @@ export default function Honors() {
             </li>
           ))}
         </ol>
-
-        <p className="mt-8 inline-block rounded-full border border-dashed border-hairline px-4 py-1.5 text-[11px] text-fg-2">
-          奖项的年份 / 颁发单位 / 级别等细节等本人提供后补充
-        </p>
       </div>
     </section>
   )

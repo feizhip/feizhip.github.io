@@ -7,6 +7,8 @@ interface Props {
   items: Project[]
   onOpen: (project: Project) => void
   openId: string | null
+  /** 紧凑模式：嵌入 Hero 右栏用——尺寸缩小 + 滚轮仅在悬停时接管（不劫持页面滚动）） */
+  compact?: boolean
 }
 
 /**
@@ -29,16 +31,29 @@ const TAU = Math.PI * 2
 const DRAG_SENS = 0.005
 const WHEEL_SENS = 0.0035
 
-/* ---- 螺旋楼梯参数 ---- */
-const RADIUS = 380          /* 水平圆环半径 */
-const HELIX_AMP = 130       /* 螺旋振幅（px）：最高卡 vs 最低卡的垂直差距的一半 */
+/* ---- 螺旋楼梯参数（full 模式） ---- */
+const RADIUS = 580          /* 水平圆环半径（增大让 8 张卡分散不挤） */
+const HELIX_AMP = 150       /* 螺旋振幅（px）：最高卡 vs 最低卡的垂直差距的一半 */
 const CARD_W = 320
 const CARD_H = 420
 
-export default function SpiralGallery({ items, onOpen, openId }: Props) {
+/* ---- 紧凑模式参数（Hero 右栏） ---- */
+const C_RADIUS = 305
+const C_HELIX_AMP = 82
+const C_CARD_W = 205
+const C_CARD_H = 270
+
+export default function SpiralGallery({ items, onOpen, openId, compact = false }: Props) {
   const [rotation, setRotation] = useState(0)
   const stageRef = useRef<HTMLDivElement | null>(null)
   const dragRef = useRef({ dragging: false, startX: 0, startR: 0 })
+  /* 紧凑模式下，滚轮只在鼠标悬停于舞台上时才旋转（否则放行页面滚动） */
+  const hoveredRef = useRef(false)
+
+  const RADIUS_ = compact ? C_RADIUS : RADIUS
+  const HELIX_AMP_ = compact ? C_HELIX_AMP : HELIX_AMP
+  const CARD_W_ = compact ? C_CARD_W : CARD_W
+  const CARD_H_ = compact ? C_CARD_H : CARD_H
 
   /* 滚轮结束后吸附到最近卡 */
   const snapTimer = useRef<number | null>(null)
@@ -54,6 +69,7 @@ export default function SpiralGallery({ items, onOpen, openId }: Props) {
   }
 
   function handleWheel(e: WheelEvent<HTMLDivElement>) {
+    if (compact && !hoveredRef.current) return /* 悬停外：放行页面滚动 */
     e.preventDefault()
     setRotation((r) => r + e.deltaY * WHEEL_SENS)
     scheduleSnap()
@@ -92,12 +108,13 @@ export default function SpiralGallery({ items, onOpen, openId }: Props) {
     const el = stageRef.current
     if (!el) return
     const onWheel = (ev: globalThis.WheelEvent) => {
+      if (compact && !hoveredRef.current) return /* 悬停外：放行页面滚动 */
       ev.preventDefault()
       setRotation((r) => r + ev.deltaY * WHEEL_SENS)
     }
     el.addEventListener('wheel', onWheel, { passive: false })
     return () => el.removeEventListener('wheel', onWheel)
-  }, [])
+  }, [compact])
 
   const N = items.length
   const step = TAU / N
@@ -120,10 +137,15 @@ export default function SpiralGallery({ items, onOpen, openId }: Props) {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        className="spiral-stage relative mx-auto hidden h-[640px] w-full max-w-[1200px] cursor-grab touch-none outline-none focus-visible:ring-2 focus-visible:ring-accent sm:block"
-        style={{ perspective: '1400px', perspectiveOrigin: '50% 45%' }}
+        onMouseEnter={() => { hoveredRef.current = true }}
+        onMouseLeave={() => { hoveredRef.current = false }}
+        className={cn(
+          'spiral-stage relative mx-auto hidden w-full cursor-grab touch-none outline-none focus-visible:ring-2 focus-visible:ring-accent sm:block',
+          compact ? 'h-[440px] max-w-full' : 'h-[720px] max-w-[1500px]',
+        )}
+        style={{ perspective: compact ? '1500px' : '2000px', perspectiveOrigin: '50% 45%' }}
       >
-        {/* 螺旋轴 —— 不再需要 rotateX 大角度倾斜，螺旋自身提供纵深 */}
+        {/* 螺旋轴 —— — 不再需要 rotateX 大角度倾斜，螺旋自身提供纵深 */}
         <div
           className="absolute inset-0"
           style={{
@@ -140,7 +162,7 @@ export default function SpiralGallery({ items, onOpen, openId }: Props) {
             /* ---- 螺旋楼梯核心：Y轴偏移 ---- */
             // sin(wrapped) ∈ [-1, 1]，乘以振幅得到垂直位移
             // 正弦波让卡片在旋转时自然地"上楼下楼"
-            const yOffset = -HELIX_AMP * Math.sin(wrapped)   // 负号让左侧卡片升高（符合直觉）
+            const yOffset = -HELIX_AMP_ * Math.sin(wrapped)   // 负号让左侧卡片升高（符合直觉）
 
             /* ---- 纵深衰减 ---- */
             const scale = 0.55 + 0.45 * frontness
@@ -154,17 +176,17 @@ export default function SpiralGallery({ items, onOpen, openId }: Props) {
                 className={cn(
                   'spiral-card absolute left-1/2 top-1/2 rounded-2xl overflow-hidden',
                   isFront
-                    ? 'shadow-[0_40px_80px_-20px_rgba(0,0,0,0.85)]'
+                    ? 'shadow-[0_40px_80px_-24px_rgba(120,70,20,0.38)]'
                     : '',
                 )}
                 style={
                   {
-                    width: CARD_W,
-                    height: CARD_H,
-                    marginLeft: -CARD_W / 2,
-                    marginTop: -CARD_H / 2,
+                    width: CARD_W_,
+                    height: CARD_H_,
+                    marginLeft: -CARD_W_ / 2,
+                    marginTop: -CARD_H_ / 2,
                     /* 关键变化：加了 translateY 实现楼梯效果 */
-                    transform: `translateY(${yOffset}px) rotateY(${angle}rad) translateZ(${RADIUS}px) scale(${scale})`,
+                    transform: `translateY(${yOffset}px) rotateY(${angle}rad) translateZ(${RADIUS_}px) scale(${scale})`,
                     opacity,
                     filter: blur > 0.2 ? `blur(${blur}px)` : undefined,
                     zIndex,
@@ -190,7 +212,7 @@ export default function SpiralGallery({ items, onOpen, openId }: Props) {
 
       {/* ---------- 移动端：横滑列表 ---------- */}
       <div className="mt-4 sm:hidden">
-        <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2">
+        <div className="flex snap-x snap-m-mandatory gap-3 overflow-x-auto pb-2">
           {items.map((it) => (
             <div
               key={it.id}
@@ -279,23 +301,23 @@ function CardFace({
         <PlaceholderCover title={project.title} subtitle={project.subtitle} />
       )}
 
-      {/* 渐变遮罩 + 文字 */}
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-5 pt-16">
+      {/* 渐变遮罩 + 文字（压在图片上，暖棕色遮罩保可读） */}
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#2a190a]/92 via-[#2a190a]/45 to-transparent p-5 pt-16">
         {/* 角色标签 */}
-        <span className="mb-2 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] tracking-wider text-white/80 backdrop-blur-sm">
+        <span className="mb-2 inline-block rounded-full bg-white/25 px-2.5 py-0.5 text-[10px] tracking-wider text-white backdrop-blur-sm">
           {project.role}
         </span>
         <p className="font-display text-lg font-bold leading-tight text-white">
           {project.title}
         </p>
-        <p className="mt-0.5 truncate text-xs text-white/60">{project.subtitle}</p>
+        <p className="mt-0.5 truncate text-xs text-white/70">{project.subtitle}</p>
       </div>
 
       {/* 当前卡高光边框 */}
       {isFront && (
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/20"
+          className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/50"
         />
       )}
     </button>
@@ -304,10 +326,10 @@ function CardFace({
 
 function PlaceholderCover({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#1a1a1f] via-[#0e0e12] to-[#0a0a0c]">
+    <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#f8efe0] via-[#f3e6cf] to-[#ecd9ba]">
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(120%_60%_at_50%_0%,var(--accent-soft),transparent_62%)]"
+        className="absolute inset-0 bg-[radial-gradient(120%_60%_at_50%_0%,var(--accent-2-soft),transparent_62%)]"
       />
       <div className="relative flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
         <p className="font-display text-2xl font-bold leading-tight text-[color:var(--fg-name)] md:text-3xl">

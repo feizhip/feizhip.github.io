@@ -2,11 +2,20 @@
   "eyebrow": "ABOUT",
   "title_zh": "关于我",
   "title_en": "About Me",
-  "_note": "bio / personality / interests 是占位文案，等本人提供后替换；skills 与 education 来自简历原文",
+  "_note": "bio / personality 基于真实素材整理（简历原文 + 论文摘要 + 上线产品简介）；interests 待本人提供；skills 与 education 来自简历原文",
   "photo": "/images/sci/sci-conference-mentor.jpg",
-  "photo_caption": "待补充：与导师在学术会议合影",
-  "bio": ["待补充：自我介绍文案（等本人提供）"],
-  "personality": ["待补充"],
+  "bio": [
+    "我是广东石油化工学院物联网工程专业的本科生。本科阶段把精力主要花在两件事上——让 CV 算法在真实场景跑起来，以及做出真正上线运营的产品。",
+    "在 CV 方向上，以第一作者身份完成两篇 SCI 二区论文（Frontiers in Plant Science）：基于改进 YOLOv11 的荔枝虫眼检测，以及基于改进 YOLOv12 的炭疽病轻量化分级 LycheeGuard-Lite。两条线都围绕同一个目标——用更轻的模型在田间端侧跑出可用精度。",
+    "在产品方向上，独立完成了 aigcdown.com（降 AIGC 率工具站，从市场调研、模型微调到多服务器部署全流程）和 jinengcang.cn（在线课程平台，覆盖课程、题库、进度与设备授权）。全栈、部署、运营都自己跑通。"
+  ],
+  "personality": [
+    "自学驱动",
+    "跨学科探索",
+    "独立做事",
+    "注重落地",
+    "抗压多线"
+  ],
   "interests": ["待补充"],
   "skills": [
     "Python",

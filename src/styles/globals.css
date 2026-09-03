@@ -22,6 +22,19 @@
     overflow-x: hidden;
   }
 
+  /* 梦幻暖色氛围光：整站固定的三团大光晕（暖黄 × 橙），营造通透感 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(42rem 30rem at 12% -6%, rgba(247, 179, 43, 0.16), transparent 62%),
+      radial-gradient(46rem 34rem at 92% 14%, rgba(242, 100, 25, 0.1), transparent 64%),
+      radial-gradient(52rem 40rem at 50% 108%, rgba(247, 179, 43, 0.12), transparent 66%);
+  }
+
   /* 锚点跳转时给固定 Nav 让位 */
   section[id] {
     scroll-margin-top: calc(var(--nav-h) + 24px);
@@ -46,7 +59,7 @@
     border: 2px solid var(--bg-0);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #2a2a32;
+    background: #e2d3b8;
   }
 
   /* 尊重系统「减少动效」设置 */
@@ -80,12 +93,13 @@
     color: var(--fg-2);
   }
 
-  /* 玻璃质感卡片 */
+  /* 玻璃质感卡片：浅色磨砂玻璃 */
   .glass {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--glass);
     border: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px -12px rgba(120, 80, 30, 0.14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 
   /* 键盘可达的焦点环 */
@@ -150,5 +164,70 @@
   100% {
     transform: translateY(-130px);
     opacity: 0;
+  }
+}
+
+/* ============================================
+   首屏 Hero 入场：E · 圆形遮罩扩展
+   从画面中央一个小圆点 → 扩展成全屏矩形（clip-path circle）
+   ============================================ */
+@keyframes hero-circle-reveal {
+  0% {
+    clip-path: circle(0% at 50% 45%);
+  }
+  100% {
+    clip-path: circle(150% at 50% 45%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-circle-in {
+    animation: hero-circle-reveal 1.5s cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-circle-in {
+    clip-path: none;
+  }
+}
+
+/* ============================================
+   数字人 IP 板块装饰
+   ============================================ */
+@layer utilities {
+  /* CHARACTER 浮动卡：缓慢浮动 */
+  .dh-float-a {
+    animation: dh-float 7s ease-in-out infinite;
+  }
+
+  /* ITEM 浮动卡：错开相位 */
+  .dh-float-b {
+    animation: dh-float 8s ease-in-out 1.2s infinite;
+  }
+}
+
+@keyframes dh-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 故事展台：整层媒体淡入换场 */
+.stage-fade {
+  animation: stage-fade-in 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes stage-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }

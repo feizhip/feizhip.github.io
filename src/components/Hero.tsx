@@ -1,6 +1,10 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 
-import { profile } from '@/lib/data'
+import PhotoDetailModal from '@/components/PhotoDetailModal'
+import SpiralGallery from '@/components/SpiralGallery'
+
+import { profile, projects } from '@/lib/data'
+import type { Project } from '@/types/content'
 
 /** 粒子位置手工排布，避免每次渲染随机跳动 */
 const PARTICLES = [
@@ -17,9 +21,11 @@ const PARTICLES = [
 /**
  * 首屏 Hero
  * 左：姓名 / 中英 tagline / 简介 / 两个 CTA / 状态徽章
- * 右：CSS 玻璃方碑（纯 CSS，不引 Three.js）
+ * 右：紧凑版单螺旋照片墙（原来 MZ 玻璃方碑的位置）——滚轮/拖拽旋转，点击弹详情
  */
 export default function Hero() {
+  const [openProject, setOpenProject] = useState<Project | null>(null)
+
   return (
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden">
       {/* 背景光晕 */}
@@ -27,7 +33,7 @@ export default function Hero() {
         <div className="hero-glow absolute left-1/2 top-[-120px] h-[560px] w-[860px] max-w-[140vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--accent-soft),transparent)] blur-2xl" />
       </div>
 
-      <div className="container-page relative grid items-center gap-14 pb-24 pt-32 md:grid-cols-[1.15fr_0.85fr] md:pt-28">
+      <div className="container-page relative grid items-center gap-10 pb-24 pt-28 md:grid-cols-[1.1fr_0.9fr] md:pt-24">
         {/* ---------- 左：文字 ---------- */}
         <div>
           <p className="eyebrow">{profile.eyebrow}</p>
@@ -65,35 +71,19 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* ---------- 右：玻璃方碑 ---------- */}
-        <div aria-hidden className="relative mx-auto hidden h-[460px] w-[320px] select-none md:block">
-          {/* 光柱 */}
-          <div className="absolute left-1/2 top-[-10px] h-[68%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[color:var(--accent)] to-transparent opacity-40" />
-
-          {/* 玻璃板 */}
-          <div className="monolith absolute inset-x-8 top-20 h-[330px] overflow-hidden rounded-2xl border border-[color:var(--border-strong)] bg-gradient-to-b from-white/[0.07] to-white/[0.015] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur-xl">
-            {/* 顶部金光 */}
-            <div className="absolute inset-0 bg-[radial-gradient(130%_60%_at_50%_-10%,var(--accent-soft),transparent_62%)]" />
-            {/* 内描边高光 */}
-            <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-b from-white/[0.05] to-transparent" />
-
-            <div className="relative flex h-full flex-col items-center justify-center gap-4">
-              <span className="font-display text-[68px] font-bold leading-none text-[color:var(--fg-name)]">
-                {profile.name_en.split(' ').map((w) => w[0]).join('')}
-              </span>
-              <span className="h-px w-14 bg-[color:var(--accent-ring)]" />
-              <span className="text-[10px] tracking-[0.32em] text-fg-2">PORTFOLIO · 2026</span>
-            </div>
+        {/* ---------- 右：紧凑单螺旋照片墙 ---------- */}
+        <div aria-hidden={false} className="relative select-none">
+          {/* 螺旋背后的暖光 */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="h-[340px] w-[340px] rounded-full bg-[radial-gradient(closest-side,var(--accent-2-soft),transparent)] blur-xl" />
           </div>
 
-          {/* 底座投影 */}
-          <div className="absolute bottom-14 left-1/2 h-6 w-40 -translate-x-1/2 rounded-[50%] bg-black/60 blur-md" />
-
-          {/* 上升粒子 */}
-          {PARTICLES.map((p, i) => (
+          {/* 上升粒子（保留少量氛围） */}
+          {PARTICLES.slice(0, 4).map((p, i) => (
             <span
               key={i}
-              className="particle absolute rounded-full bg-accent"
+              aria-hidden
+              className="particle pointer-events-none absolute rounded-full bg-accent"
               style={
                 {
                   left: p.left,
@@ -106,6 +96,13 @@ export default function Hero() {
               }
             />
           ))}
+
+          <SpiralGallery
+            compact
+            items={projects.items}
+            onOpen={setOpenProject}
+            openId={openProject?.id ?? null}
+          />
         </div>
       </div>
 
@@ -113,6 +110,16 @@ export default function Hero() {
       <p className="absolute inset-x-0 bottom-7 text-center text-[10px] tracking-[0.3em] text-fg-2">
         {profile.scroll_hint}
       </p>
+
+      {/* 项目详情浮层 */}
+      {openProject && (
+        <PhotoDetailModal
+          project={openProject}
+          allProjects={projects.items}
+          onClose={() => setOpenProject(null)}
+          onNavigate={setOpenProject}
+        />
+      )}
     </section>
   )
 }

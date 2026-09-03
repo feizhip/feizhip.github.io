@@ -1,16 +1,18 @@
 import DataInspector from '@/components/DataInspector'
+import DigitalHumanIntro from '@/components/DigitalHumanIntro'
 import Hero from '@/components/Hero'
 import Honors from '@/components/Honors'
 import Nav from '@/components/Nav'
 import About from '@/components/About'
-import Work from '@/components/Work'
 import Contact from '@/components/Contact'
 
 import { profile } from '@/lib/data'
 
 /**
- * 阶段 2+ 合并后：
- * - Hero / Work（含单螺旋）/ Honors / About / Contact 全部是真组件
+ * 页面结构（2026-09-03 v5）：
+ * - 最前：数字人 IP 板块（角色 + 四幕故事）
+ * - 之后：真人内容。Hero 右栏即紧凑单螺旋照片墙（原 MZ 方碑位置），
+ *   原独立 Work 区已并入 Hero，点击螺旋卡直接弹详情浮层。
  * - 加 ?debug 参数可回到「内容总览」页
  */
 export default function App() {
@@ -23,8 +25,8 @@ export default function App() {
     <>
       <Nav />
       <main>
+        <DigitalHumanIntro />
         <Hero />
-        <Work />
         <Honors />
         <About />
         <Contact />

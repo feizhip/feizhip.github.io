@@ -93,6 +93,46 @@
       "url": "https://doi.org/10.3389/fpls.2025.1643700"
     },
     {
+      "id": "yolo11-borer-figure",
+      "title": "荔枝虫眼检测 · 数据集样本",
+      "subtitle": "YOLOv11 论文原图 · Figure",
+      "period": "2025.03 - 2025.05",
+      "cover": { "type": "image", "src": "/images/papers/yolo11-01.webp", "caption": "Lychee fruits and interiors affected by lychee stem borer." },
+      "link": null,
+      "role": "科研 · 论文图表",
+      "summary": "受荔枝虫蛀影响的果实与内部实拍样本，是 YOLOv11 虫眼检测模型训练数据集的可视化原图。",
+      "highlights": [
+        "来自论文原图：被荔枝虫蛀食的果实及内部虫道"
+      ],
+      "stack": ["数据采集", "标注可视化"],
+      "metrics": [],
+      "venue": "Frontiers in Plant Science",
+      "level": "SCI 二区",
+      "published_at": "2025-10-22",
+      "doi": "10.3389/fpls.2025.1643700",
+      "url": "https://doi.org/10.3389/fpls.2025.1643700"
+    },
+    {
+      "id": "yolo11-annot-figure",
+      "title": "荔枝虫眼检测 · 标注方法对比",
+      "subtitle": "YOLOv11 论文原图 · Figure",
+      "period": "2025.03 - 2025.05",
+      "cover": { "type": "image", "src": "/images/papers/yolo11-02.webp", "caption": "Comparison of the effects of two annotation methods." },
+      "link": null,
+      "role": "科研 · 论文图表",
+      "summary": "两种数据标注方法的效果对比图，展示论文中为提升虫眼定位精度而做的标注策略研究。",
+      "highlights": [
+        "来自论文原图：两种标注方式对虫眼框选效果的对比"
+      ],
+      "stack": ["数据标注", "消融对比"],
+      "metrics": [],
+      "venue": "Frontiers in Plant Science",
+      "level": "SCI 二区",
+      "published_at": "2025-10-22",
+      "doi": "10.3389/fpls.2025.1643700",
+      "url": "https://doi.org/10.3389/fpls.2025.1643700"
+    },
+    {
       "id": "yolo12-anthracnose",
       "title": "基于改进 YOLOv12 的荔枝炭疽病轻量化分级",
       "subtitle": "LycheeGuard-Lite · SCI 二区",
@@ -119,6 +159,46 @@
         { "label": "mAP50", "value": "99.4%" },
         { "label": "轻病召回", "value": "97.2%" }
       ],
+      "venue": "Frontiers in Plant Science",
+      "level": "SCI 二区",
+      "published_at": "2025-12-22",
+      "doi": "10.3389/fpls.2025.1688675",
+      "url": "https://doi.org/10.3389/fpls.2025.1688675"
+    },
+    {
+      "id": "yolo12-anth-figure",
+      "title": "荔枝炭疽病分级 · 病斑样本",
+      "subtitle": "YOLOv12 论文原图 · Figure",
+      "period": "2025.06 - 2025.08",
+      "cover": { "type": "image", "src": "/images/papers/yolo12-01.webp", "caption": "Lychee with three different anthracnose disease levels." },
+      "link": null,
+      "role": "科研 · 论文图表",
+      "summary": "轻、中、重三级炭疽病荔枝的实拍样本，是轻量化分级模型 LycheeGuard-Lite 的数据集可视化原图。",
+      "highlights": [
+        "来自论文原图：三种不同严重程度的炭疽病荔枝样本"
+      ],
+      "stack": ["病斑分级", "数据采集"],
+      "metrics": [],
+      "venue": "Frontiers in Plant Science",
+      "level": "SCI 二区",
+      "published_at": "2025-12-22",
+      "doi": "10.3389/fpls.2025.1688675",
+      "url": "https://doi.org/10.3389/fpls.2025.1688675"
+    },
+    {
+      "id": "yolo12-detect-figure",
+      "title": "荔枝炭疽病分级 · 检测结果对比",
+      "subtitle": "YOLOv12 论文原图 · Figure",
+      "period": "2025.06 - 2025.08",
+      "cover": { "type": "image", "src": "/images/papers/yolo12-02.webp", "caption": "Comparison of YOLOv12 and LycheeGuard-Lite detection results." },
+      "link": null,
+      "role": "科研 · 论文图表",
+      "summary": "YOLOv12 基线与轻量化 LycheeGuard-Lite 在炭疽病分级上的检测结果可视化对比，展示轻量模型的稳定性。",
+      "highlights": [
+        "来自论文原图：YOLOv12 与 LycheeGuard-Lite 检测结果对比"
+      ],
+      "stack": ["检测对比", "消融实验"],
+      "metrics": [],
       "venue": "Frontiers in Plant Science",
       "level": "SCI 二区",
       "published_at": "2025-12-22",

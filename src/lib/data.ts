@@ -9,12 +9,21 @@
 
 import aboutJson from '@/data/about.json'
 import contactJson from '@/data/contact.json'
+import digitalHumanJson from '@/data/digital-human.json'
 import honorsJson from '@/data/honors.json'
 import navJson from '@/data/nav.json'
 import profileJson from '@/data/profile.json'
 import projectsJson from '@/data/projects.json'
 
-import type { About, Contact, Honors, Nav, Profile, Projects } from '@/types/content'
+import type {
+  About,
+  Contact,
+  DigitalHuman,
+  Honors,
+  Nav,
+  Profile,
+  Projects,
+} from '@/types/content'
 
 export const profile: Profile = profileJson
 export const nav: Nav = navJson
@@ -23,6 +32,8 @@ export const projects: Projects = projectsJson
 export const honors: Honors = honorsJson
 export const about: About = aboutJson
 export const contact: Contact = contactJson
+/** 数字人 IP 板块（页面最前）：角色 + 四幕故事 */
+export const digitalHuman: DigitalHuman = digitalHumanJson
 
 /** 打包出口，组件里 `import { data } from '@/lib/data'` 一把梭也行 */
 export const data = {
@@ -32,6 +43,7 @@ export const data = {
   honors,
   about,
   contact,
+  digitalHuman,
 }
 
 export type SiteData = typeof data

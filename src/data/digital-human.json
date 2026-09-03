@@ -1,0 +1,66 @@
+{
+  "_note": "数字人 IP 板块数据。四段故事对应四个真实项目；video 字段等用户投放视频后填入，poster 先用现有真实图片当封面。",
+  "eyebrow": "DIGITAL HUMAN · AI IP",
+  "welcome_zh": "泽杰的物联谷",
+  "welcome_en": "Zejie's IoT Valley · Welcome",
+  "intro": "一个用算法守护荔枝园的少年物灵工程师。这里是他故事的起点——从一颗被看见的荔枝开始。",
+  "pill_nav": [
+    { "label": "角色介绍", "anchor": "#dh-character" },
+    { "label": "精选故事", "anchor": "#dh-stories" },
+    { "label": "真人作品", "anchor": "#home" }
+  ],
+  "character": {
+    "name": "泽杰",
+    "name_en": "ZEJIE",
+    "cutout": "/images/dh/zejie-cutout.png",
+    "tags": ["物灵工程师", "物联网工程在读", "荔枝园守护者"],
+    "item_label": "ITEM",
+    "item_name": "慧眼平板",
+    "item_desc": "能看见万物本质的发光平板，很多故事都从它的第一条检测框开始。",
+    "quote": "物联网不是冰冷的线，是让每一颗荔枝都被看见的温柔。"
+  },
+  "stories_title_zh": "精选故事",
+  "stories_title_en": "Highlight",
+  "stories": [
+    {
+      "id": "act1",
+      "eyebrow": "ZEJIE STORY / ACT 1",
+      "title_zh": "荔枝林里的虫眼怪",
+      "title_en": "The Bug-Eyed Monster",
+      "desc": "千年荔枝园突遭「虫眼怪」侵扰，泽杰闭关三月炼成「慧眼一号」，让虫眼无处遁形。",
+      "video": "/videos/dh-act1-huiyan.mp4",
+      "poster": "/images/sci/sci-poster-lychee.jpg",
+      "pill_bg": "/images/dh/act1-frame.jpg"
+    },
+    {
+      "id": "act2",
+      "eyebrow": "ZEJIE STORY / ACT 2",
+      "title_zh": "炭疽瘟的轻羽护盾",
+      "title_en": "The Feather Shield",
+      "desc": "「炭疽瘟」悄然蔓延，泽杰以独创轻量化骨阵造出「轻羽护盾」，在病发最早期封印瘟毒。",
+      "video": "/videos/dh-act2-feather.mp4",
+      "poster": "/images/sci/sci-field-lychee.jpg",
+      "pill_bg": "/images/dh/act2-frame.jpg"
+    },
+    {
+      "id": "act3",
+      "eyebrow": "ZEJIE STORY / ACT 3",
+      "title_zh": "降痕工坊",
+      "title_en": "The Trace Workshop",
+      "desc": "学者们的论文卷轴常被「机械之灵的痕迹」污染，泽杰开设降痕工坊，帮卷轴回归本真笔触。",
+      "video": "/videos/dh-act3-workshop.mp4",
+      "poster": "/images/aigcdown-cover.png",
+      "pill_bg": "/images/dh/act3-frame.jpg"
+    },
+    {
+      "id": "act4",
+      "eyebrow": "ZEJIE STORY / ACT 4",
+      "title_zh": "浮空技能仓",
+      "title_en": "The Floating Skill Ark",
+      "desc": "为让更多年轻物灵师成长，泽杰建起悬浮空中的魔法学堂，课程、题库、试炼一应俱全。",
+      "video": "/videos/dh-act4-ark.mp4",
+      "poster": "/images/jinengcang-cover.png",
+      "pill_bg": "/images/dh/act4-frame.jpg"
+    }
+  ]
+}

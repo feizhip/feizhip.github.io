@@ -1,0 +1,129 @@
+/* ============================================
+   PillNav —— 药丸导航（GSAP 升起圆 + 文字翻转）
+   暖色玻璃药丸 × 活力橙升起圆 × 奶油色翻转文字
+   ============================================ */
+
+.pill-nav {
+  --base: #241a10;          /* 药丸文字（暖咖啡） */
+  --pill-bg: #f26419;       /* 升起圆（活力橙） */
+  --hover-text: #fbf7f0;    /* 圆内翻转文字（奶油白） */
+}
+
+.pill-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- 单个药丸 ---- */
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.42rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px -8px rgba(150, 90, 30, 0.18);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.pill:hover {
+  border-color: rgba(242, 100, 25, 0.4);
+  box-shadow: 0 6px 20px -8px rgba(242, 100, 25, 0.35);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- 升起圆（GSAP 控制尺寸/位置/scale） ---- */
+.hover-circle {
+  position: absolute;
+  left: 50%;
+  border-radius: 50%;
+  background: var(--pill-bg);
+  pointer-events: none;
+}
+
+/* ---- 双层文字栈：hover 时原文字上移出、橙圆文字从下入 ---- */
+.label-stack {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 1.3em;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pill-label {
+  display: block;
+  position: relative;
+  color: var(--base);
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pill-label-hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  color: var(--hover-text);
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---- logo ---- */
+.pill-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.4rem;
+  width: 2.4rem;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1.5px solid rgba(242, 100, 25, 0.35);
+  box-shadow: 0 4px 14px -6px rgba(150, 90, 30, 0.3);
+  flex-shrink: 0;
+}
+
+.pill-logo img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- 移动端抽屉里的胶囊链接 ---- */
+.mobile-pill {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mobile-pill.is-active {
+  background: var(--pill-bg);
+  color: var(--hover-text);
+  border-color: transparent;
+}

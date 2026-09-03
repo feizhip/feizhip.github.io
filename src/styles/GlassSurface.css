@@ -1,0 +1,74 @@
+/* ============================================
+   GlassSurface —— 圆角玻璃卡片（玻璃质感版）
+   玻璃 = 透明 + 多层高光 + 大气浮起阴影 + 暖橙边光
+   内部画面清晰透出，卡片边界由 2.5px 暖白描边明确
+   ============================================ */
+
+.gsurface {
+  position: relative;
+  isolation: isolate;
+  /* 关键：让所有内部内容（包括图片）被圆角裁剪，不再溢出 */
+  overflow: hidden;
+  border-radius: var(--gs-radius, 60px);
+  background:
+    /* 顶部弧形柔光 */
+    radial-gradient(ellipse 90% 50% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 70%),
+    /* 底部反射光 */
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(255, 255, 255, 0.18), transparent 65%);
+  /* 3px 暖白描边：让卡片边界明确 */
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  /* 多层阴影让卡片明显浮起 */
+  box-shadow:
+    /* 大气浮起阴影（更深） */
+    0 70px 140px -36px rgba(60, 30, 8, 0.75),
+    /* 中层暖橙光环 */
+    0 28px 60px -16px rgba(180, 100, 40, 0.5),
+    /* 内部细描边（描出卡片厚度） */
+    inset 0 0 0 2px rgba(255, 255, 255, 0.45),
+    /* 顶部内高光（强） */
+    inset 0 3px 4px rgba(255, 255, 255, 0.9),
+    /* 底部内柔光 */
+    inset 0 -2px 0 rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(var(--gs-blur, 0px)) saturate(1);
+  -webkit-backdrop-filter: blur(var(--gs-blur, 0px)) saturate(1);
+}
+
+/* 顶部镜面弧光（玻璃受光面）—— 强 */
+.gsurface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    175deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.22) 35%,
+    transparent 55%
+  );
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+/* 两侧玻璃边缘光带：左白高光 + 右暖橙边光（强） */
+.gsurface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    /* 左侧白高光 */
+    linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, transparent 8%),
+    /* 右侧暖橙边光（玻璃折射感·强） */
+    linear-gradient(270deg, rgba(247, 179, 43, 0.7) 0%, transparent 9%),
+    /* 右侧白高光 */
+    linear-gradient(270deg, rgba(255, 255, 255, 0.4) 0%, transparent 5%);
+  z-index: 0;
+}
+
+/* 内容层（必须在伪元素之上） */
+.gsurface__content {
+  position: relative;
+  z-index: 1;
+}

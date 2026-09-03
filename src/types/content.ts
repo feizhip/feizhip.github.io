@@ -148,3 +148,43 @@ export interface Contact {
   socials: Social[]
   cta_label: string
 }
+
+/** 数字人 IP 板块顶部胶囊导航项 */
+export interface DhPill {
+  label: string
+  anchor: string
+}
+
+/** 数字人四幕故事卡 —— video 等用户投放后填入，null 时显示 poster 封面 + 「视频待投放」 */
+export interface DhStory {
+  id: string
+  eyebrow: string
+  title_zh: string
+  title_en: string
+  desc: string
+  video: string | null
+  poster: string
+  /** 故事方块背景画面（视频首帧或场景近景），fallback 用 poster */
+  pill_bg?: string
+}
+
+export interface DigitalHuman {
+  eyebrow: string
+  welcome_zh: string
+  welcome_en: string
+  intro: string
+  pill_nav: DhPill[]
+  character: {
+    name: string
+    name_en: string
+    cutout: string
+    tags: string[]
+    item_label: string
+    item_name: string
+    item_desc: string
+    quote: string
+  }
+  stories_title_zh: string
+  stories_title_en: string
+  stories: DhStory[]
+}

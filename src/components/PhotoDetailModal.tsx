@@ -61,7 +61,7 @@ export default function PhotoDetailModal({ project, allProjects, onClose, onNavi
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2a190a]/55 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={onBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -72,15 +72,15 @@ export default function PhotoDetailModal({ project, allProjects, onClose, onNavi
         type="button"
         onClick={onClose}
         aria-label="关闭"
-        className="focus-ring absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:bg-white/20 hover:text-white"
+        className="focus-ring absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/60 bg-white/70 text-fg-1 shadow-sm transition-all hover:bg-white hover:text-fg-0"
       >
         <X size={18} />
       </button>
 
       {/* 主内容区 */}
-      <div className="relative flex h-[85vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-bg-0 shadow-2xl sm:m-4">
+      <div className="relative flex h-[85vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-hairline bg-bg-0 shadow-[0_40px_90px_-30px_rgba(90,50,10,0.45)] sm:m-4">
         {/* ====== 左侧：大图 ====== */}
-        <div className="relative flex shrink-0 items-center justify-center bg-black/60 sm:w-[55%]">
+        <div className="relative flex shrink-0 items-center justify-center bg-[#efe4cf] sm:w-[55%]">
           {project.cover.src ? (
             project.cover.type === 'video' ? (
               <video
@@ -99,15 +99,15 @@ export default function PhotoDetailModal({ project, allProjects, onClose, onNavi
               />
             )
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1a1a1f] to-[#0a0a0c]">
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#f8efe0] to-[#ecd9ba]">
               <p className="font-display text-xl font-bold text-fg-2">{project.title}</p>
             </div>
           )}
 
           {/* 图片底部 caption */}
           {project.cover.caption && (
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent px-5 py-3">
-              <p className="text-xs text-white/60">{project.cover.caption}</p>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#2a190a]/85 to-transparent px-5 py-3">
+              <p className="text-xs text-white/80">{project.cover.caption}</p>
             </div>
           )}
         </div>

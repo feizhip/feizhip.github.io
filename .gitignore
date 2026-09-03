@@ -36,3 +36,6 @@ SCI相关照片/
 # 根目录散落的原始截图（已复制进 public/images）
 4ceb4f51626f9f05d1ea2fead68563bc.jpg
 de4b08a4bbe1eb3eba4e7e40e7839e0c.jpg
+
+# Vite 临时文件
+*.timestamp-*.mjs

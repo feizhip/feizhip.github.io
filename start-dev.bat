@@ -1,7 +1,8 @@
-chcp 65001 >nul
 @echo off
+chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
+title 马泽杰个人作品集 - 本地预览
 
 echo.
 echo   ==========================================
@@ -35,14 +36,19 @@ if not exist "node_modules\" (
 )
 
 echo.
-echo   [2/2] 正在启动，浏览器会自动打开：
-echo         http://localhost:5173
+echo   [2/2] 正在启动开发服务器，请稍等 3~10 秒...
+echo         网页就绪后会【自动打开浏览器】，不用手动输网址。
 echo.
-echo   提示：想停止预览，直接关掉这个黑窗口就行。
+echo   *** 想停止预览：直接关掉这个黑窗口就行 ***
 echo.
+
+REM 后台探测 5173 / 5174 两个端口，谁先就绪就自动打开谁
+start "" /min powershell -NoProfile -Command "$u1='http://localhost:5173';$u2='http://localhost:5174';for($i=0;$i -lt 240;$i++){foreach($u in @($u1,$u2)){try{$r=Invoke-WebRequest -Uri $u -UseBasicParsing -TimeoutSec 2;if($r.StatusCode -eq 200){Start-Process $u;exit 0}}catch{}};Start-Sleep -Milliseconds 500}"
 
 call npm run dev
 
 echo.
-echo   预览已停止。
+echo   预览已停止（黑窗口已关或被关闭）。
+echo   想再次访问：重新双击 start-dev.bat
+echo.
 pause

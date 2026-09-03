@@ -5,22 +5,30 @@ import { cn } from '@/lib/cn'
 
 /**
  * 联系
- * - 邮箱可点复制（带轻量 toast 反馈）
- * - 城市 / 社交链接空时显示「未填写 / 待补」
- * - 隐私字段（手机 / 微信）刻意不渲染
+ * - 邮箱 / 微信号可点复制（带轻量 toast 反馈）
+ * - LOCATION / SOCIAL 板块已删（按用户要求），只留 EMAIL + WECHAT + Contact 按钮
  */
 export default function Contact() {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState<'email' | 'wechat' | null>(null)
 
-  async function copyEmail() {
-    if (!contact.email) return
+  async function copyText(text: string, which: 'email' | 'wechat') {
     try {
-      await navigator.clipboard.writeText(contact.email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1800)
+      await navigator.clipboard.writeText(text)
+      setCopied(which)
+      setTimeout(() => setCopied(null), 1800)
     } catch {
       /* 浏览器拒绝时静默 */
     }
+  }
+
+  function copyEmail() {
+    if (!contact.email) return
+    copyText(contact.email, 'email')
+  }
+
+  function copyWechat() {
+    if (!contact.wechat) return
+    copyText(contact.wechat, 'wechat')
   }
 
   return (
@@ -32,7 +40,7 @@ export default function Contact() {
         </h2>
         <p className="mt-1 text-sm tracking-wider2 text-fg-2">{contact.title_en}</p>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
           <Field label="EMAIL">
             {contact.email ? (
               <button
@@ -47,33 +55,19 @@ export default function Contact() {
               <Empty>未填写</Empty>
             )}
           </Field>
-          <Field label="LOCATION">
-            {contact.location ?? <Empty>未填写</Empty>}
-          </Field>
-          <Field label="SOCIAL">
-            <div className="flex flex-wrap gap-2">
-              {contact.socials.map((s) =>
-                s.url ? (
-                  <a
-                    key={s.type}
-                    href={s.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-hairline px-3 py-1 text-[11px] text-fg-1 hover:border-[color:var(--border-strong)]"
-                  >
-                    {s.label}
-                  </a>
-                ) : (
-                  <span
-                    key={s.type}
-                    title="待补"
-                    className="rounded-full border border-dashed border-hairline px-3 py-1 text-[11px] text-fg-2"
-                  >
-                    {s.label} <span className="text-[9px]">（待补）</span>
-                  </span>
-                ),
-              )}
-            </div>
+          <Field label="WECHAT">
+            {contact.wechat ? (
+              <button
+                type="button"
+                onClick={copyWechat}
+                className="focus-ring rounded-md font-mono text-accent transition-colors hover:underline"
+                aria-label="复制微信号"
+              >
+                {contact.wechat}
+              </button>
+            ) : (
+              <Empty>未填写</Empty>
+            )}
           </Field>
         </div>
 
@@ -97,10 +91,6 @@ export default function Contact() {
             </span>
           )}
         </div>
-
-        <p className="mt-8 text-[11px] text-fg-2">
-          手机 / 微信：隐私字段，页面默认不展示（数据已存 JSON 里）
-        </p>
       </div>
     </section>
   )
