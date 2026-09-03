@@ -25,10 +25,10 @@ export default function About() {
           <p className="mt-2 text-sm tracking-wider2 text-fg-2">{about.title_en}</p>
         </div>
 
-        {/* 主体：左大照片 + 右文字信息流 */}
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
-          {/* 左：个人照（视觉锚点，占大列） */}
-          <div className="min-w-0">
+        {/* 主体：左列=照片+教育，右列=自我介绍+性格+技能（左右两列平衡） */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-2 lg:gap-12">
+          {/* 左：个人照（视觉锚点）+ 教育卡 */}
+          <div className="min-w-0 space-y-6">
             {about.photo && (
               <div className="group relative overflow-hidden rounded-2xl border border-hairline bg-bg-1">
                 <img
@@ -44,29 +44,8 @@ export default function About() {
                 )}
               </div>
             )}
-          </div>
 
-          {/* 右：自我介绍 + 性格 + 技能 + 教育（紧凑流式） */}
-          <div className="min-w-0 space-y-8">
-            {/* 自我介绍 */}
-            {about.bio.length > 0 && !(about.bio.length === 1 && about.bio[0].startsWith('待补充')) && (
-              <div>
-                <h3 className="eyebrow">自我介绍</h3>
-                <div className="mt-3 space-y-3">
-                  {about.bio.map((para, i) => (
-                    <p key={i} className="text-sm leading-relaxed text-fg-1">{para}</p>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* 性格 + 技能 */}
-            <div className="space-y-4">
-              <ChipGroup label="性格" items={about.personality} />
-              <ChipGroup label={`技能 · ${about.skills.length}`} items={about.skills} />
-            </div>
-
-            {/* 教育（紧凑版） */}
+            {/* 教育（紧跟照片下方，与右列底部对齐） */}
             <div className="rounded-2xl border border-hairline bg-bg-1 p-5 lg:p-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
@@ -97,6 +76,25 @@ export default function About() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* 右：自我介绍 + 性格 + 技能 */}
+          <div className="min-w-0 space-y-8">
+            {about.bio.length > 0 && !(about.bio.length === 1 && about.bio[0].startsWith('待补充')) && (
+              <div>
+                <h3 className="eyebrow">自我介绍</h3>
+                <div className="mt-3 space-y-3">
+                  {about.bio.map((para, i) => (
+                    <p key={i} className="text-sm leading-relaxed text-fg-1">{para}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-4">
+              <ChipGroup label="性格" items={about.personality} />
+              <ChipGroup label={`技能 · ${about.skills.length}`} items={about.skills} />
             </div>
           </div>
         </div>
