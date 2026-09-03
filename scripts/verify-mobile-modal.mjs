@@ -72,16 +72,28 @@ await c.send('Emulation.setDeviceMetricsOverride', { width: WIDTH, height: HEIGH
 await c.send('Page.navigate', { url })
 await sleep(WAIT)
 
-// 滚动到 #work
-await c.send('Runtime.evaluate', { expression: "document.getElementById('work')?.scrollIntoView({block:'start'}) || window.scrollTo(0, 600)", returnByValue: true })
-await sleep(1500)
+// 等所有入场动画完成
+await sleep(5000)
+// 滚到 #home（Hero + Work 合并）
+const sr = await c.send('Runtime.evaluate', { expression: "(()=>{ try { const e=document.getElementById('home'); if(!e) return 'NO_HOME'; const r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top + 400); return 'OK scrolledY=' + window.scrollY; } catch(err) {return 'ERR ' + err.message} })()", returnByValue: true })
+console.log('[scroll] ' + JSON.stringify(sr?.result?.value))
+await sleep(2500)
 
-// 点击第一张项目卡
+// 找项目卡（移动端是 .snap-x 容器内的卡片 div）
 const r = await c.send('Runtime.evaluate', {
-  expression: `(()=>{ const el=document.querySelector(${JSON.stringify(CLICK_SEL)}); if(!el) return 'NO_EL'; el.click(); return 'CLICKED'; })()`,
+  expression: `(()=>{
+    const hs = document.getElementById('home');
+    if (!hs) return 'NO_HOME';
+    const cards = hs.querySelectorAll('.snap-x > div');
+    if (!cards.length) return 'NO_CARDS in_home snapx len=' + hs.outerHTML.length;
+    cards[0].click();
+    return 'CLICKED_count=' + cards.length;
+  })()`,
   returnByValue: true,
 })
-console.log('[click] result=' + JSON.stringify(r?.result || r))
+const val = r?.result?.value
+const err = r?.exceptionDetails?.text
+console.log('[click] value=' + JSON.stringify(val) + (err ? ' err=' + err : ''))
 await sleep(1200)
 
 const shotRes = await c.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false })

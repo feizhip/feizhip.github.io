@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type WheelEvent } from 'react'
 
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 import type { Project } from '@/types/content'
 import { cn } from '@/lib/cn'
 
@@ -46,9 +48,19 @@ const C_CARD_H = 270
 export default function SpiralGallery({ items, onOpen, openId, compact = false }: Props) {
   const [rotation, setRotation] = useState(0)
   const stageRef = useRef<HTMLDivElement | null>(null)
+  const mobileListRef = useRef<HTMLDivElement | null>(null)
   const dragRef = useRef({ dragging: false, startX: 0, startR: 0 })
   /* 紧凑模式下，滚轮只在鼠标悬停于舞台上时才旋转（否则放行页面滚动） */
   const hoveredRef = useRef(false)
+
+  /* 移动端箭头：按卡片宽度步进滚动 */
+  function mobileScrollBy(dir: 1 | -1) {
+    const el = mobileListRef.current
+    if (!el) return
+    const card = el.querySelector('div')
+    const step = card?.getBoundingClientRect().width || el.clientWidth
+    el.scrollBy({ left: dir * step, behavior: 'smooth' })
+  }
 
   const RADIUS_ = compact ? C_RADIUS : RADIUS
   const HELIX_AMP_ = compact ? C_HELIX_AMP : HELIX_AMP
@@ -211,13 +223,22 @@ export default function SpiralGallery({ items, onOpen, openId, compact = false }
       </div>
 
       {/* ---------- 移动端：横滑列表 ---------- */}
-      <div className="mt-4 sm:hidden">
-        <div className="flex snap-x snap-m-mandatory gap-3 overflow-x-auto pb-2">
+      <div className="relative mt-4 sm:hidden">
+        <div
+          ref={mobileListRef}
+          className="flex snap-x snap-proximity gap-3 overflow-x-auto pb-2"
+          style={{
+            touchAction: 'pan-x pan-y',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehaviorX: 'contain',
+            scrollbarWidth: 'none',
+          } as CSSProperties}
+        >
           {items.map((it) => (
             <div
               key={it.id}
               className={cn(
-                'relative w-[72vw] shrink-0 snap-center overflow-hidden rounded-2xl',
+                'relative w-[72vw] max-w-[300px] shrink-0 snap-center overflow-hidden rounded-2xl',
                 it.id === openId ? 'ring-2 ring-accent' : '',
               )}
               style={{ aspectRatio: '3 / 4' }}
@@ -226,7 +247,26 @@ export default function SpiralGallery({ items, onOpen, openId, compact = false }
             </div>
           ))}
         </div>
-        <p className="mt-2 text-center text-[11px] text-fg-2">横滑浏览 · 点开看详情</p>
+
+        {/* 左右箭头：触摸滑不动时的兜底切换 */}
+        <button
+          type="button"
+          aria-label="上一个项目"
+          onClick={() => mobileScrollBy(-1)}
+          className="absolute left-0 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-hairline bg-bg-0/85 text-fg-1 shadow-md backdrop-blur transition active:scale-90"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <button
+          type="button"
+          aria-label="下一个项目"
+          onClick={() => mobileScrollBy(1)}
+          className="absolute right-0 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-hairline bg-bg-0/85 text-fg-1 shadow-md backdrop-blur transition active:scale-90"
+        >
+          <ChevronRight size={18} />
+        </button>
+
+        <p className="mt-2 text-center text-[11px] text-fg-2">左右滑动或点箭头浏览 · 点卡片看详情</p>
       </div>
 
       {/* 指示点 */}
